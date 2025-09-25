@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const BookCard = ({ book }) => (
   <div className="book-card">
@@ -6,12 +6,12 @@ const BookCard = ({ book }) => (
     <div className="book-info">
       <h3 className="book-title">{book.title}</h3>
       <p className="book-author">Por {book.author}</p>
-      <p className="book-genre">{book.genre}</p>
+      <p className="book-genre">{book.genre[0]}</p>
       <p className="book-owner">Propietario: {book.owner}</p>
       <p className="book-condition">Estado: {book.condition}</p>
       <div className="book-actions">
         <button className="btn-primary">Solicitar Intercambio</button>
-        <button className="btn-secondary">Ver Detalles</button>
+        <button className="btn-details">Ver Detalles</button>
       </div>
     </div>
   </div>

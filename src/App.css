@@ -15,7 +15,8 @@
 .btn-secondary,
 .btn-login,
 .btn-register,
-.btn-cta {
+.btn-cta,
+.btn-details {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -74,6 +75,11 @@
 
 .btn-cta:hover {
   background-color: #b91c1c;
+}
+
+.btn-details {
+  background-color: #c297ec;
+  color: white;
 }
 
 /* Header Styles */

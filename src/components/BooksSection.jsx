@@ -4,12 +4,20 @@ import { availableBooks } from "../data/books.js";
 
 const BooksSection = () => {
   const [selectedGenre, setSelectedGenre] = useState("Todos los géneros");
+  const [selectedCondition, setSelectedCondition] = useState(
+    "Todas las condiciones"
+  );
 
   const filteredBooks = availableBooks.filter((book) => {
     if (selectedGenre === "Todos los géneros") return true;
     return book.genre.some((g) =>
       g.toLowerCase().includes(selectedGenre.toLowerCase())
     );
+  });
+
+  const conditionFilteredBooks = filteredBooks.filter((book) => {
+    if (selectedCondition === "Todas las condiciones") return true;
+    return book.condition === selectedCondition;
   });
 
   return (
@@ -52,7 +60,11 @@ const BooksSection = () => {
               <option>Policial</option>
               <option>Satírico</option>
             </select>
-            <select className="filter-select">
+            <select
+              className="filter-select"
+              value={selectedCondition}
+              onChange={(e) => setSelectedCondition(e.target.value)}
+            >
               <option>Todas las condiciones</option>
               <option>Como nuevo</option>
               <option>Excelente</option>
@@ -64,7 +76,7 @@ const BooksSection = () => {
 
         {/* Books Grid */}
         <div className="books-grid">
-          {filteredBooks.map((book) => (
+          {conditionFilteredBooks.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}
         </div>

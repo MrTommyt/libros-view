@@ -1,3 +1,10 @@
+import cienAnosSoledad from "../assets/img/cien-anos-soledad.jpg";
+import georgeOrwel from "../assets/img/george-orwell-book.png";
+import elPrincipito from "../assets/img/principito.png";
+import donQuijote from "../assets/img/don-quijote.png";
+import rayuela from "../assets/img/rayuela.png";
+import cronicaMuerte from "../assets/img/cronica-muerte-anunciada.png";
+
 export const availableBooks = [
   {
     id: 1,
@@ -6,7 +13,7 @@ export const availableBooks = [
     genre: "Realismo mágico",
     owner: "María González",
     condition: "Excelente",
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=400&fit=crop"
+    image: cienAnosSoledad,
   },
   {
     id: 2,
@@ -15,7 +22,7 @@ export const availableBooks = [
     genre: "Ficción distópica",
     owner: "Carlos Ruiz",
     condition: "Bueno",
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=400&fit=crop"
+    image: georgeOrwel,
   },
   {
     id: 3,
@@ -24,7 +31,7 @@ export const availableBooks = [
     genre: "Fábula",
     owner: "Ana Silva",
     condition: "Como nuevo",
-    image: "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?w=300&h=400&fit=crop"
+    image: elPrincipito,
   },
   {
     id: 4,
@@ -33,7 +40,7 @@ export const availableBooks = [
     genre: "Clásico",
     owner: "Pedro López",
     condition: "Bueno",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop"
+    image: donQuijote,
   },
   {
     id: 5,
@@ -42,7 +49,7 @@ export const availableBooks = [
     genre: "Literatura experimental",
     owner: "Laura Mendez",
     condition: "Excelente",
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&h=400&fit=crop"
+    image: rayuela,
   },
   {
     id: 6,
@@ -51,6 +58,6 @@ export const availableBooks = [
     genre: "Novela",
     owner: "Roberto Jiménez",
     condition: "Bueno",
-    image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&h=400&fit=crop"
-  }
+    image: cronicaMuerte,
+  },
 ];

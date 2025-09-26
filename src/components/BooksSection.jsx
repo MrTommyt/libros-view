@@ -1,40 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import BookCard from "./BookCard.jsx";
+import BookCard from "../components/BookCard.jsx";
 
 const BooksSection = () => {
-  const [books, setBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [books, setBooks] = useState([]);           // lista de libros
+  const [searchTerm, setSearchTerm] = useState(""); // búsqueda
+  const [loading, setLoading] = useState(true);     // carga
+  const [error, setError] = useState(null);         // errores
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/v1/Books")
-      .then((response) => response.json())
-      .then((data) => setBooks(data))
-      .catch((error) => console.error("Error fetching books:", error));
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/books");
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+        const data = await response.json();
+        console.log("Books recibido:", data);
+
+        // Garantiza que books siempre sea un array
+        setBooks(Array.isArray(data) ? data : []);
+
+      } catch (err) {
+        console.error("Error fetching books:", err);
+        setError(err.message || "Error desconocido");
+        setBooks([]); // protección extra
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
   }, []);
 
-  // Filter states
-  const filteredBooks = books.filter((book) => {
-    return (
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (book.author &&
-        book.author.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (book.editorial &&
-        book.editorial.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (book.isbn && book.isbn.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  });
+  // Filtrado seguro
+  const filteredBooks = Array.isArray(books)
+    ? books.filter((book) =>
+        book.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.editorial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.isbn?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   return (
-    <section className="books-section" id="books">
+    <section className="books-page books-section">
       <div className="container">
-        <div className="section-header">
-          <h2>Libros Disponibles para Intercambio</h2>
-          <p>
-            Descubre la variedad de libros que nuestra comunidad tiene para
-            ofrecer
-          </p>
-        </div>
+        <h2 className="title-center">Todos los Libros disponibles</h2>
 
         {/* Search and Filter Bar */}
         <div className="search-filter-bar">
@@ -81,28 +91,18 @@ const BooksSection = () => {
           </div>
         </div>
 
-        {/* Books Grid */}
+        {/* Grid de libros */}
         <div className="books-grid">
           {filteredBooks.length > 0 ? (
-            filteredBooks
-              .slice(0, 6)
-              .map((book) => <BookCard key={book.id} book={book} />)
+            filteredBooks.map((book) => <BookCard key={book.id} book={book} />)
           ) : (
-            <p className="no-results">
-              No se encontraron libros con esos filtros.
-            </p>
+            <p className="no-results">No se encontraron libros.</p>
           )}
-        </div>
-
-        {/* Botón Ver todos los libros */}
-        <div className="view-all">
-          <Link to="/AllBooks">
-            <button className="btn-view-all">Ver todos los libros</button>
-          </Link>
         </div>
       </div>
     </section>
   );
 };
+
 
 export default BooksSection;

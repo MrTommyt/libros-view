@@ -16,7 +16,8 @@
 .btn-login,
 .btn-register,
 .btn-cta,
-.btn-details {
+.btn-details,
+.btn-view-all {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -80,6 +81,20 @@
 .btn-details {
   background-color: #c297ec;
   color: white;
+}
+
+.view-all {
+  text-align: center;
+}
+
+.btn-view-all {
+  color: rgb(0, 0, 0);
+  margin-top: 2rem;
+  background-color: #cfcdcd;
+}
+
+.btn-view-all:hover {
+  background-color: #acabab;
 }
 
 /* Header Styles */
@@ -167,7 +182,8 @@
   background-color: #f9fafb;
 }
 
-.section-header {
+.section-header,
+.title-center {
   text-align: center;
   margin-bottom: 3rem;
 }

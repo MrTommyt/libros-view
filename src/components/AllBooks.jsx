@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import BookCard from "./BookCard.jsx";
+import BookCard from "../components/BookCard.jsx"; // se importa desde components
 
-const BooksSection = () => {
+const AllBooks = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -13,7 +12,6 @@ const BooksSection = () => {
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
 
-  // Filter states
   const filteredBooks = books.filter((book) => {
     return (
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,15 +24,9 @@ const BooksSection = () => {
   });
 
   return (
-    <section className="books-section" id="books">
+    <section className="books-page books-section">
       <div className="container">
-        <div className="section-header">
-          <h2>Libros Disponibles para Intercambio</h2>
-          <p>
-            Descubre la variedad de libros que nuestra comunidad tiene para
-            ofrecer
-          </p>
-        </div>
+        <h2 className="title-center">Todos los Libros disponibles</h2>
 
         {/* Search and Filter Bar */}
         <div className="search-filter-bar">
@@ -81,28 +73,17 @@ const BooksSection = () => {
           </div>
         </div>
 
-        {/* Books Grid */}
+        {/* Grid de libros */}
         <div className="books-grid">
           {filteredBooks.length > 0 ? (
-            filteredBooks
-              .slice(0, 6)
-              .map((book) => <BookCard key={book.id} book={book} />)
+            filteredBooks.map((book) => <BookCard key={book.id} book={book} />)
           ) : (
-            <p className="no-results">
-              No se encontraron libros con esos filtros.
-            </p>
+            <p className="no-results">No se encontraron libros.</p>
           )}
-        </div>
-
-        {/* Botón Ver todos los libros */}
-        <div className="view-all">
-          <Link to="/AllBooks">
-            <button className="btn-view-all">Ver todos los libros</button>
-          </Link>
         </div>
       </div>
     </section>
   );
 };
 
-export default BooksSection;
+export default AllBooks;

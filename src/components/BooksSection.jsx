@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BookCard from "./BookCard.jsx";
 import { availableBooks } from "../data/books.js";
 
 const BooksSection = () => {
-  const [selectedGenre, setSelectedGenre] = useState("Todos los géneros");
-  const [selectedCondition, setSelectedCondition] = useState(
-    "Todas las condiciones"
-  );
+  const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredBooks = availableBooks.filter((book) => {
-    if (selectedGenre === "Todos los géneros") return true;
-    return book.genre.some((g) =>
-      g.toLowerCase().includes(selectedGenre.toLowerCase())
+  useEffect(() => {
+    fetch("http://localhost:8080/api/v1/Books")
+      .then((response) => response.json())
+      .then((data) => setBooks(data))
+      .catch((error) => console.error("Error fetching books:", error));
+  }, []);
+
+  // Filter states
+  const filteredBooks = books.filter((book) => {
+    return (
+      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (book.author &&
+        book.author.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.editorial &&
+        book.editorial.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.isbn && book.isbn.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-  });
-
-  const conditionFilteredBooks = filteredBooks.filter((book) => {
-    if (selectedCondition === "Todas las condiciones") return true;
-    return book.condition === selectedCondition;
   });
 
   return (
@@ -38,14 +43,16 @@ const BooksSection = () => {
               type="text"
               placeholder="Buscar por título, autor o género..."
               className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button className="search-btn">🔍</button>
           </div>
           <div className="filter-options">
             <select
               className="filter-select"
-              value={selectedGenre}
-              onChange={(e) => setSelectedGenre(e.target.value)}
+              // value={selectedGenre}
+              // onChange={(e) => setSelectedGenre(e.target.value)}
             >
               <option>Todos los géneros</option>
               <option>Novela</option>
@@ -62,8 +69,8 @@ const BooksSection = () => {
             </select>
             <select
               className="filter-select"
-              value={selectedCondition}
-              onChange={(e) => setSelectedCondition(e.target.value)}
+              // value={selectedCondition}
+              // onChange={(e) => setSelectedCondition(e.target.value)}
             >
               <option>Todas las condiciones</option>
               <option>Como nuevo</option>
@@ -76,9 +83,13 @@ const BooksSection = () => {
 
         {/* Books Grid */}
         <div className="books-grid">
-          {conditionFilteredBooks.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
+          {filteredBooks.length > 0 ? (
+            filteredBooks.map((book) => <BookCard key={book.id} book={book} />)
+          ) : (
+            <p className="no-results">
+              No se encontraron libros con esos filtros.
+            </p>
+          )}
         </div>
       </div>
     </section>

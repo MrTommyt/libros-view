@@ -1,54 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BookCard from "../components/BookCard.jsx";
 
-const AllBooks = () => {
-  const [books, setBooks] = useState([]);          // lista de libros
-  const [searchTerm, setSearchTerm] = useState(""); // texto de búsqueda
-  const [loading, setLoading] = useState(true);    // estado de carga
-  const [error, setError] = useState(null);        // mensaje de error
+const AllBooks = ({ api = "http://localhost:8080/api/v1/books" }) => {
+  const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    let ignore = false;
+    (async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/titles");
-        if (!response.ok) throw new Error("Error al obtener los libros");
-
-        const data = await response.json();
-        console.log("Respuesta del backend:", data);
-
-        // Siempre forzar a que books sea un array
-        if (Array.isArray(data)) {
-          setBooks(data);
-        } else if (Array.isArray(data.books)) {
-          setBooks(data.books);
-        } else {
-          console.warn("El backend no devolvió un array de libros válido");
+        const res = await fetch(api, { headers: { Accept: "application/json" } });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!ignore) setBooks(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error(e);
+        if (!ignore) {
+          setError("No fue posible cargar los libros publicados.");
           setBooks([]);
         }
-
-      } catch (err) {
-        console.error(err);
-        setError(err.message || "Error desconocido");
-        setBooks([]);
       } finally {
-        setLoading(false);
+        if (!ignore) setLoading(false);
       }
-    };
+    })();
+    return () => { ignore = true; };
+  }, [api]);
 
-    fetchBooks();
-  }, []);
+  // 1) Normaliza: Book -> campos planos desde bookDefinition
+  const normalized = useMemo(() => {
+    return (Array.isArray(books) ? books : []).map((b) => {
+      const d = b.bookDefinition || {};
+      return {
+        id: b.id,
+        state: b.state ?? "",
+        title: d.title ?? "",
+        author: d.author ?? "",
+        editorial: d.editorial ?? "",
+        isbn: d.isbn ?? "",
+        _raw: b, // por si necesitas el objeto original
+      };
+    });
+  }, [books]);
 
-  // Filtrado seguro
-  const filteredBooks = Array.isArray(books)
-      ? books.filter((book) => {
-        return (
-            book.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.editorial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.isbn?.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      })
-      : [];
+  // 2) Filtro por término de búsqueda
+  const q = searchTerm.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    if (!q) return normalized;
+    return normalized.filter(
+        (x) =>
+            x.title.toLowerCase().includes(q) ||
+            x.author.toLowerCase().includes(q) ||
+            x.editorial.toLowerCase().includes(q) ||
+            x.isbn.toLowerCase().includes(q)
+    );
+  }, [normalized, q]);
 
   return (
       <section className="books-page books-section">
@@ -60,43 +67,18 @@ const AllBooks = () => {
             <div className="search-box">
               <input
                   type="text"
-                  placeholder="Buscar por título, autor o género..."
+                  placeholder="Buscar por título, autor o ISBN..."
                   className="search-input"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="search-btn">🔍</button>
             </div>
+
+            {/* Si aún no tienes género/condición en el modelo, déjalos deshabilitados */}
             <div className="filter-options">
-              <select
-                  className="filter-select"
-                  // value={selectedGenre}
-                  // onChange={(e) => setSelectedGenre(e.target.value)}
-              >
-                <option>Todos los géneros</option>
-                <option>Novela</option>
-                <option>Realismo mágico</option>
-                <option>Clásicos</option>
-                <option>Ciencia ficción</option>
-                <option>Romance</option>
-                <option>Filosofía</option>
-                <option>Ficción distópica</option>
-                <option>Literatura infantil</option>
-                <option>Aventuras</option>
-                <option>Policial</option>
-                <option>Satírico</option>
-              </select>
-              <select
-                  className="filter-select"
-                  // value={selectedCondition}
-                  // onChange={(e) => setSelectedCondition(e.target.value)}
-              >
-                <option>Todas las condiciones</option>
-                <option>Como nuevo</option>
-                <option>Excelente</option>
-                <option>Bueno</option>
-                <option>Regular</option>
-              </select>
+              <select className="filter-select" disabled><option>Todos los géneros</option></select>
+              <select className="filter-select" disabled><option>Todas las condiciones</option></select>
             </div>
           </div>
 
@@ -104,14 +86,20 @@ const AllBooks = () => {
           <div className="books-grid">
             {loading && <p>Cargando libros...</p>}
             {error && <p>Error: {error}</p>}
-            {!loading && !error && filteredBooks.length === 0 && (
-                <p>No se encontraron libros.</p>
-            )}
-            {!loading &&
-                !error &&
-                filteredBooks.map((book) => (
-                    <BookCard key={book.id} book={book}/>
-                ))}
+            {!loading && !error && filtered.length === 0 && <p>No se encontraron libros.</p>}
+            {!loading && !error && filtered.map((b) => (
+                <BookCard
+                    key={b.id}
+                    book={{
+                      id: b.id,
+                      title: b.title,
+                      author: b.author,
+                      editorial: b.editorial,
+                      isbn: b.isbn,
+                      state: b.state,
+                    }}
+                />
+            ))}
           </div>
         </div>
       </section>

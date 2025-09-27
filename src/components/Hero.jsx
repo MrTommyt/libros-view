@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="hero">
       <div className="container">
@@ -11,7 +13,7 @@ const Hero = () => {
             intercambiando con otros usuarios de manera gratuita.
           </p>
           <div className="hero-actions">
-            <button className="btn-cta">Publicar Mi Libro</button>
+            <button className="btn-cta" onClick={() => navigate("/publish")}>Publicar Mi Libro</button>
             <button className="btn-secondary">Explorar Libros</button>
           </div>
         </div>

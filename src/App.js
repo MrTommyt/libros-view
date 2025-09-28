@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       <>
         <Header />
         <PublishBook
-          clientId={null}
+          clientId={"0999aacd-b47c-4c39-b4db-33c4f0fa8da4"}
           titlesBase="http://localhost:8080/api/v1/titles" // <-- backend
           booksBase="http://localhost:8080/api/v1/books"   // <-- backend
         />

@@ -63,8 +63,8 @@ export default function PublishBook({ clientId, titlesBase = "/api/v1/titles", b
             try {
                 const payload = {
                 state: stateText.trim(),
-                bookDefinition: { id: String(selectedId) },
-                ...(clientId ? { client: { id: String(clientId) } } : {}), // ← client opcional
+                bookDefinitionID: String(selectedId),   // ← ahora es UUID plano
+                ...(clientId ? { clientId: String(clientId) } : {}), // ← opcional
                 };
 
                 const res = await fetch(`${booksBase}`, { // ← barra final por @PostMapping("/")

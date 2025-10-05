@@ -8,12 +8,21 @@ const Book = () => {
 
   return (
     <div className="book-container">
-      <div className={`book ${flipped ? "flipped" : ""}`}>
-        <div className="page front">
-          <LoginForm onSwitch={() => setFlipped(true)} />
+      <div className="book">
+        {/* Página izquierda fija (logo) */}
+        <div className="page left">
+          {/* <img src={logo} alt="Logo" className="logo" /> */}
+          <div className="logo-placeholder">Logo</div>
         </div>
-        <div className="page back">
-          <RegisterForm onSwitch={() => setFlipped(false)} />
+
+        {/* Página derecha que gira */}
+        <div className={`page-right ${flipped ? "flipped" : ""}`}>
+          <div className="page-front">
+            <LoginForm onSwitch={() => setFlipped(true)} />
+          </div>
+          <div className="page-back">
+            <RegisterForm onSwitch={() => setFlipped(false)} />
+          </div>
         </div>
       </div>
     </div>

@@ -13,65 +13,89 @@ body {
   background: var(--bg);
   color: var(--text);
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
 }
 
 .book-container {
-  perspective: 1200px;
+  perspective: 1600px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: linear-gradient(145deg, #f0f2f5, #e6e9ef);
+  overflow: hidden;
 }
 
 .book {
   position: relative;
-  width: 360px;
+  width: 720px;
   height: 430px;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
+  display: flex;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 
-.book.flipped {
-  transform: rotateY(180deg);
-}
-
-.page {
-  position: absolute;
-  width: 100%;
+/* Página izquierda FIJA (logo) */
+.page.left {
+  width: 50%;
   height: 100%;
   background: var(--white);
-  border: 1px solid var(--shadow);
-  backface-visibility: hidden;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 1px solid var(--border);
+  box-shadow: inset -8px 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
-.page.front {
+.logo-placeholder {
+  font-size: 24px;
+  color: var(--muted);
+  font-weight: bold;
+}
+
+/* Página derecha que GIRA */
+.page-right {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  transform-origin: left center;
+  z-index: 2;
+}
+
+.page-right.flipped {
+  transform: rotateY(-180deg);
+}
+
+.page-front,
+.page-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  border-left: 1px solid var(--border);
+}
+
+.page-front {
   transform: rotateY(0deg);
 }
 
-.page.back {
+.page-back {
   transform: rotateY(180deg);
 }
 
-.book::before {
-  content: "";
-  position: absolute;
-  left: -8px;
-  top: 0;
-  width: 8px;
-  height: 100%;
-  background: linear-gradient(to right, #e6dfd2, #f3ece2);
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.15);
-}
-
-/* Formulario */
+/* Estilos para los formularios */
 .form-container {
-  width: 80%;
+  width: 100%;
+  max-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -85,13 +109,26 @@ body {
   color: var(--primary-dark);
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-container label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .form-container input {
-  padding: 10px 12px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 14px;
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  background: var(--white);
 }
 
 .form-container input:focus {
@@ -100,16 +137,16 @@ body {
 }
 
 .form-container button {
-  padding: 10px 12px;
+  padding: 12px;
   border: none;
   border-radius: 8px;
   background: var(--primary);
   color: var(--white);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.25s ease;
-  transform: 0.1s ease;
+  margin-top: 8px;
 }
 
 .form-container button:hover {
@@ -124,6 +161,7 @@ body {
   font-size: 14px;
   text-align: center;
   color: var(--muted);
+  margin: 0;
 }
 
 .form-container .link {
@@ -131,16 +169,17 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
 .form-container .link:hover {
   color: var(--primary);
+  text-decoration: underline;
 }
 
-/* —— Responsive —— */
-@media (max-width: 500px) {
-  .book {
-    width: 300px;
-    height: 400px;
-  }
+/* Logo styles */
+.logo {
+  width: 80%;
+  height: auto;
+  max-width: 200px;
 }

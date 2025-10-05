@@ -7,6 +7,7 @@ import HowItWorks from "./components/HowItWorks.jsx";
 import Footer from "./components/Footer.jsx";
 import AllBooks from "./components/AllBooks.jsx";
 import PublishBook from "./components/PublishBook.jsx"; // <-- nuevo
+import BookLogin from "./pages/BookLogin.jsx"; // <-- nuevo
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -41,12 +42,16 @@ const router = createBrowserRouter([
         <PublishBook
           clientId={null}
           titlesBase="http://localhost:8080/api/v1/titles" // <-- backend
-          booksBase="http://localhost:8080/api/v1/books"   // <-- backend
+          booksBase="http://localhost:8080/api/v1/books" // <-- backend
         />
 
         <Footer />
       </>
     ),
+  },
+  {
+    path: "/login",
+    element: <BookLogin />, // <-- nuevo componente
   },
 ]);
 

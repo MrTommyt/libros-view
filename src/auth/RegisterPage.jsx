@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
-    const [form, setForm] = useState({ name:"", email:"", password:"", address:"" });
+    const [form, setForm] = useState({ name: "", email: "", password: "", address: "" });
     const [err, setErr] = useState("");
     const navigate = useNavigate();
 

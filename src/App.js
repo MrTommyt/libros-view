@@ -8,6 +8,7 @@ import Footer from "./components/Footer.jsx";
 import AllBooks from "./components/AllBooks.jsx";
 import PublishBook from "./components/PublishBook.jsx"; // <-- nuevo
 import BookLogin from "./pages/BookLogin.jsx"; // <-- nuevo
+import Profile from "./pages/Profile.jsx"; // <-- nuevo
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -52,6 +53,16 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <BookLogin />, // <-- nuevo componente
+  },
+  {
+    path: "/profile",
+    element: (
+      <>
+        <Header />
+        <Profile />
+        <Footer />
+      </>
+    ),
   },
 ]);
 

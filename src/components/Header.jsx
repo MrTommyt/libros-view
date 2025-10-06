@@ -13,7 +13,7 @@ const Header = () => {
             <div className="nav-links">
               <a href="#books">Libros Disponibles</a>
               <a href="#how-it-works">¿Cómo Funciona?</a>
-              <a href="#about">Acerca de</a>
+              <a href="#">Mi perfil</a>
             </div>
             <div className="auth-buttons">
               <Link to="/login">

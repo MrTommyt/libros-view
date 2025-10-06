@@ -55,6 +55,9 @@ const Header = () => {
                                                 <Link to="/my-exchanges/received" onClick={() => setMenuOpen(false)}>
                                                     📥 Solicitudes Recibidas
                                                 </Link>
+                                                <Link to="/my-exchanges" onClick={() => setMenuOpen(false)}>
+                                                    🔄 Mis Intercambios
+                                                </Link>
                                                 <button
                                                     onClick={() => { logout(); setMenuOpen(false); }}
                                                     className="logout-btn"

@@ -16,6 +16,7 @@ import MyReceivedExchanges from "./pages/MyReceivedExchanges.jsx";
 import ConfirmExchange from "./pages/ConfirmExchange.jsx";
 import { AuthProvider } from "./auth/AuthProvider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MyExchanges from "./pages/MyExchanges";
 
 const router = createBrowserRouter([
     {
@@ -121,6 +122,16 @@ const router = createBrowserRouter([
             <>
                 <Header />
                 <ConfirmExchange />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/my-exchanges",
+        element: (
+            <>
+                <Header />
+                <MyExchanges />
                 <Footer />
             </>
         ),

@@ -1,0 +1,70 @@
+.exchange-container {
+  padding: 2rem;
+  background: #f8f9fa;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.exchange-container h2 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.exchange-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.target-book,
+.my-books {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.book-card {
+  background: #e7dfdf;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  border-color: #764ba2;
+}
+
+.book-card.selected {
+  border-color: #764ba2;
+  background: #f3e9ff;
+}
+
+.exchange-btn {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.exchange-btn:hover {
+  opacity: 0.9;
+}

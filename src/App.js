@@ -9,6 +9,7 @@ import AllBooks from "./components/AllBooks.jsx";
 import PublishBook from "./components/PublishBook.jsx"; // <-- nuevo
 import BookLogin from "./pages/BookLogin.jsx"; // <-- nuevo
 import Profile from "./pages/Profile.jsx"; // <-- nuevo
+import ExchangePage from "./pages/ExchangePage.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -60,6 +61,16 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Profile />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/exchange",
+    element: (
+      <>
+        <Header />
+        <ExchangePage />
         <Footer />
       </>
     ),

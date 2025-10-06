@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Header = () => {
   return (
@@ -15,8 +15,12 @@ const Header = () => {
               <a href="#about">Acerca de</a>
             </div>
             <div className="auth-buttons">
-              <button className="btn-login">Iniciar Sesión</button>
-              <button className="btn-register">Registrarse</button>
+              <Link to="/login">
+                <button className="btn-login">Iniciar Sesión</button>
+              </Link>
+              <Link to="/register">
+                <button className="btn-register">Registrarse</button>
+              </Link>
             </div>
           </nav>
         </div>

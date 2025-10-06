@@ -1,9 +1,7 @@
-// src/components/BooksSection.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import BookCard from "../components/BookCard.jsx";
-import { Link } from "react-router-dom";
 
-const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" }) => {
+const AllBooks = ({ api = "http://localhost:8080/api/v1/books" }) => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -30,7 +28,7 @@ const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" })
     return () => { ignore = true; };
   }, [api]);
 
-  // Normaliza Book -> campos planos desde bookDefinition
+  // 1) Normaliza: Book -> campos planos desde bookDefinition
   const normalized = useMemo(() => {
     return (Array.isArray(books) ? books : []).map((b) => {
       const d = b.bookDefinition || {};
@@ -41,11 +39,12 @@ const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" })
         author: d.author ?? "",
         editorial: d.editorial ?? "",
         isbn: d.isbn ?? "",
-        _raw: b,
+        _raw: b, // por si necesitas el objeto original
       };
     });
   }, [books]);
 
+  // 2) Filtro por término de búsqueda
   const q = searchTerm.trim().toLowerCase();
   const filtered = useMemo(() => {
     if (!q) return normalized;
@@ -58,18 +57,12 @@ const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" })
     );
   }, [normalized, q]);
 
-  // Límite de tarjetas: si limit=0 mostramos todas
-  const visible = limit ? filtered.slice(0, limit) : filtered;
-
-  if (loading) return <section className="books-page"><div className="container">Cargando…</div></section>;
-  if (error)   return <section className="books-page"><div className="container">{error}</div></section>;
-
   return (
       <section className="books-page books-section">
         <div className="container">
-          <h2 className="title-center">Todos los Libros disponibles</h2>
+          <h2 className="title-center">Todos los libros disponibles</h2>
 
-          {/* Search */}
+          {/* Barra de búsqueda */}
           <div className="search-filter-bar">
             <div className="search-box">
               <input
@@ -81,42 +74,36 @@ const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" })
               />
               <button className="search-btn">🔍</button>
             </div>
+
+            {/* Si aún no tienes género/condición en el modelo, déjalos deshabilitados */}
             <div className="filter-options">
               <select className="filter-select" disabled><option>Todos los géneros</option></select>
               <select className="filter-select" disabled><option>Todas las condiciones</option></select>
             </div>
           </div>
 
-          {/* Grid */}
+          {/* Contenido */}
           <div className="books-grid">
-            {visible.length ? (
-                visible.map((b) => (
-                    <BookCard
-                        key={b.id}
-                        book={{
-                          id: b.id,
-                          title: b.title,
-                          author: b.author,
-                          editorial: b.editorial,
-                          isbn: b.isbn,
-                          state: b.state,
-                        }}
-                    />
-                ))
-            ) : (
-                <p className="no-results">No se encontraron libros.</p>
-            )}
-          </div>
-
-          {/* Botón Ver todos */}
-          <div className="view-all">
-            <Link to="/AllBooks">
-              <button className="btn-view-all">Ver todos los libros</button>
-            </Link>
+            {loading && <p>Cargando libros...</p>}
+            {error && <p>Error: {error}</p>}
+            {!loading && !error && filtered.length === 0 && <p>No se encontraron libros.</p>}
+            {!loading && !error && filtered.map((b) => (
+                <BookCard
+                    key={b.id}
+                    book={{
+                      id: b.id,
+                      title: b.title,
+                      author: b.author,
+                      editorial: b.editorial,
+                      isbn: b.isbn,
+                      state: b.state,
+                    }}
+                />
+            ))}
           </div>
         </div>
       </section>
   );
 };
 
-export default BooksSection;
+export default AllBooks;

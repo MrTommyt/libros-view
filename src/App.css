@@ -1,4 +1,8 @@
 /* Global Styles */
+body {
+  font-family: "Poppins", sans-serif;
+}
+
 .App {
   min-height: 100vh;
   color: #333;
@@ -15,7 +19,9 @@
 .btn-secondary,
 .btn-login,
 .btn-register,
-.btn-cta {
+.btn-cta,
+.btn-details,
+.btn-view-all {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -74,6 +80,25 @@
 
 .btn-cta:hover {
   background-color: #b91c1c;
+}
+
+.btn-details {
+  background-color: #c297ec;
+  color: white;
+}
+
+.view-all {
+  text-align: center;
+}
+
+.btn-view-all {
+  color: rgb(0, 0, 0);
+  margin-top: 2rem;
+  background-color: #cfcdcd;
+}
+
+.btn-view-all:hover {
+  background-color: #acabab;
 }
 
 /* Header Styles */
@@ -161,7 +186,8 @@
   background-color: #f9fafb;
 }
 
-.section-header {
+.section-header,
+.title-center {
   text-align: center;
   margin-bottom: 3rem;
 }

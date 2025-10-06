@@ -12,14 +12,16 @@ const Header = () => {
             <div className="container">
                 <div className="header-content">
                     <div className="logo">
-                        <h1>📚 BiblioIntercambio</h1>
+                        <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
+                            <h1>📚 BiblioIntercambio</h1>
+                        </a>
                     </div>
-                    <nav className="navigation">
+                <nav className="navigation">
                         <div className="nav-links">
                             <Link to="/AllBooks">Libros Disponibles</Link>
 
-                            * <Link to="/how-it-works">¿Cómo Funciona?</Link>
-                            <Link to="/about">Acerca de</Link> */
+                            <Link to="/how-it-works">¿Cómo Funciona?</Link>
+                            <Link to="/about">Acerca de</Link>
                         </div>
                         <div className="auth-buttons">
                             {!user ? (

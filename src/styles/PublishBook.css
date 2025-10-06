@@ -3,7 +3,7 @@
   --bg: #0b0b0c;
   --card: #ddd;
   --muted: #a9abb3;
-  --text: #f5f6f8;
+  --text: #000000;
   --primary: #6ea8fe;
   --primary-2: #4f89e6;
   --border: #26272b;
@@ -49,6 +49,9 @@ body {
 }
 
 .field {
+    margin: 1rem;
+    justify-content: left;
+    align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -67,7 +70,9 @@ body {
   border-radius: 12px;
   padding: 10px 12px;
   outline: none;
-  transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    width: 100%;
+    max-width: 100%;
+    transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .input::placeholder {

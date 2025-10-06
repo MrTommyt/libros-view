@@ -14,6 +14,7 @@ export default function Profile() {
                 <Link to="/my-books"><button>Mis Libros</button></Link>
                 <Link to="/my-exchanges/sent"><button>Solicitudes Enviadas</button></Link>
                 <Link to="/my-exchanges/received"><button>Solicitudes Recibidas</button></Link>
+                <Link to="/my-exchanges"><button>Mis Intercambios</button></Link>
                 <button onClick={logout}>Cerrar sesión</button>
             </div>
         </div>

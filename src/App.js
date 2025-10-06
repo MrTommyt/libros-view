@@ -6,55 +6,131 @@ import BooksSection from "./components/BooksSection.jsx";
 import HowItWorks from "./components/HowItWorks.jsx";
 import Footer from "./components/Footer.jsx";
 import AllBooks from "./components/AllBooks.jsx";
-import PublishBook from "./components/PublishBook.jsx"; // <-- nuevo
-import BookLogin from "./pages/BookLogin.jsx"; // <-- nuevo
-
+import PublishBook from "./components/PublishBook.jsx";
+import LoginPage from "./auth/LoginPage.jsx";
+import RegisterPage from "./auth/RegisterPage.jsx";
+import Profile from "./auth/Profile.jsx";
+import MyBooks from "./pages/MyBooks.jsx";
+import MySentExchanges from "./pages/MySentExchanges.jsx";
+import MyReceivedExchanges from "./pages/MyReceivedExchanges.jsx";
+import ConfirmExchange from "./pages/ConfirmExchange.jsx";
+import { AuthProvider } from "./auth/AuthProvider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <>
-        <Header />
-        <Hero />
-        <BooksSection />
-        <HowItWorks />
-        <Footer />
-      </>
-    ),
-  },
-  {
-    path: "/AllBooks",
-    element: (
-      <>
-        <Header />
-        <AllBooks />
-        <Footer />
-      </>
-    ),
-  },
-  {
-    path: "/publish", // <-- nueva ruta
-    element: (
-      <>
-        <Header />
-        <PublishBook
-          clientId={"0999aacd-b47c-4c39-b4db-33c4f0fa8da4"}
-          titlesBase="http://localhost:8080/api/v1/titles" // <-- backend
-          booksBase="http://localhost:8080/api/v1/books" // <-- backend
-        />
-
-        <Footer />
-      </>
-    ),
-  },
-  {
-    path: "/login",
-    element: <BookLogin />, // <-- nuevo componente
-  },
+    {
+        path: "/",
+        element: (
+            <>
+                <Header />
+                <Hero />
+                <BooksSection />
+                <HowItWorks />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/AllBooks",
+        element: (
+            <>
+                <Header />
+                <AllBooks />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/publish",
+        element: (
+            <>
+                <Header />
+                <PublishBook
+                    // El clientId aquí sería dinámico si el usuario está logueado
+                    // Puedes obtener el clientId del contexto de autenticación
+                    titlesBase="http://localhost:8080/api/v1/titles"
+                    booksBase="http://localhost:8080/api/v1/books"
+                />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/login",
+        element: (
+            <>
+                <Header />
+                <LoginPage />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/register",
+        element: (
+            <>
+                <Header />
+                <RegisterPage />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/profile",
+        element: (
+            <>
+                <Header />
+                <Profile />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/my-books",
+        element: (
+            <>
+                <Header />
+                <MyBooks />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/my-exchanges/sent",
+        element: (
+            <>
+                <Header />
+                <MySentExchanges />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/my-exchanges/received",
+        element: (
+            <>
+                <Header />
+                <MyReceivedExchanges />
+                <Footer />
+            </>
+        ),
+    },
+    {
+        path: "/exchange/confirm/:bookId",
+        element: (
+            <>
+                <Header />
+                <ConfirmExchange />
+                <Footer />
+            </>
+        ),
+    }
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+    return (
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
+    );
 }

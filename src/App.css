@@ -1,4 +1,59 @@
 /* Global Styles */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.btn-menu {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.dropdown-content a,
+.dropdown-content button {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-content a:hover,
+.dropdown-content button:hover {
+    background-color: #f5f5f5;
+}
+
+.logout-btn {
+    border-top: 1px solid #eee;
+    color: #dc3545 !important;
+}
+
+
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -466,4 +521,5 @@ body {
   .book-actions .btn-secondary {
     flex: none;
   }
+
 }

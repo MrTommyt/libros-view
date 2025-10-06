@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import BookCard from "../components/BookCard.jsx";
 import { Link } from "react-router-dom";
 
-const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books" }) => {
+const BooksSection = ({ limit = 6, api = "http://localhost:8080/api/v1/books/all" }) => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
